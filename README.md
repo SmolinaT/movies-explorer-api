@@ -18,4 +18,4 @@
 
 IP 158.160.56.188
 
-Backend 
+Backend https://api.smolinadip.nomoreparties.sbs
