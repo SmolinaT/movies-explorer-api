@@ -3,13 +3,13 @@ const {
   getMovie,
   createMovie,
   deleteMovie,
-} = require('../controllers/card');
-const { validateCreateCard, validateCardId } = require('../middlewares/validate');
+} = require('../controllers/movie');
+const { validateCreateMovie, validateMovieId } = require('../middlewares/validate');
 
 router.get('/', getMovie);
 
-router.post('/', validateCreateCard, createMovie);
+router.post('/', validateCreateMovie, createMovie);
 
-router.delete('/:movieId', validateCardId, deleteMovie);
+router.delete('/:movieId', validateMovieId, deleteMovie);
 
 module.exports = router;

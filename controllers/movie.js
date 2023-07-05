@@ -4,26 +4,28 @@ const BadRequestError = require('../errors/bad-request-err');
 const ForbiddenError = require('../errors/forbidden-err');
 
 const getMovie = (req, res, next) => {
-  movieModel.find({owner: req.user._id}).then((movie) => {
+  movieModel.find({ owner: req.user._id }).then((movie) => {
     res.send(movie);
   })
     .catch(next);
 };
 
 const createMovie = (req, res, next) => {
-  const { country,
+  const {
+    country,
     director,
     duration,
     year,
     description,
     image,
-    trailer,
+    trailerLink,
     nameRU,
     nameEN,
     thumbnail,
-    movieId, } = req.body;
+    movieId,
+  } = req.body;
 
-    movieModel
+  movieModel
     .create({
       owner: req.user._id,
       country,
@@ -32,7 +34,7 @@ const createMovie = (req, res, next) => {
       year,
       description,
       image,
-      trailer,
+      trailerLink,
       nameRU,
       nameEN,
       thumbnail,
@@ -44,6 +46,7 @@ const createMovie = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError('Invalid data to create movie'));
+        console.log(err);
       } else {
         next(err);
       }

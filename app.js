@@ -1,16 +1,27 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
-//const router = require('./routes/routes');
+const cors = require('cors');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
+const router = require('./routes/index');
 const centralizedError = require('./middlewares/centralized-error');
+const { DB_ADDRESS } = require('./utils/config');
 
-mongoose.connect('mongodb://127.0.0.1/bitfilmsdb');
+mongoose.connect(DB_ADDRESS);
 
 const app = express();
 
+app.use(cors());
+
 app.use(express.json());
 
-//app.use(router);
+app.use(requestLogger);
+
+app.use(router);
+
+app.use(errorLogger);
+
 app.use(errors());
 
 app.use(centralizedError);
